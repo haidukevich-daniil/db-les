@@ -13,6 +13,7 @@ typedef struct{
     long data_offset;
     long right;
     long left;
+    long next;
 }IndexNode;
 
 #endif 

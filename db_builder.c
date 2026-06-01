@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "common.h"
+#include "index.h"
 
 int main() {
 
@@ -31,7 +32,6 @@ int main() {
     fclose(in);
     fclose(out);
     fclose(index);
-    
-    
+        
     return 0;
 }
