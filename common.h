@@ -14,6 +14,13 @@ typedef struct{
     long right;
     long left;
     long next;
+    double year_area;
 }IndexNode;
+
+typedef struct{
+    int count;
+    double total_area;
+    long root_offset;
+}IndexHeader;
 
 #endif 

@@ -14,9 +14,9 @@ int main() {
     }
 
     LesData data;
+    IndexHeader header = {0, 0.0, -1};
+    fwrite(&header, sizeof(IndexHeader), 1, index);
     long offset = 0;
-    long root_offset = -1;
-
 
     while(fscanf(in, "%s %d %d %lf",
              data.code, 
@@ -25,9 +25,14 @@ int main() {
              &data.area) == 4){
         fwrite(&data, sizeof(LesData), 1, out);
 
-        root_offset = insert_node(index, root_offset, offset, data.year);
+        header.root_offset = insert_node(index, header.root_offset, offset, data.year, data.area);
         offset += sizeof(LesData);
+        header.count++;
+        header.total_area += data.area;
     }
+
+    fseek(index, 0, SEEK_SET);
+    fwrite(&header, sizeof(IndexHeader), 1, index);
 
     fclose(in);
     fclose(out);
