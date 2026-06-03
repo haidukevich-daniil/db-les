@@ -2,6 +2,7 @@
 #include "common.h"
 #include "index.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include <time.h>
 
 void builder(FILE *in, FILE *out, FILE *index){
@@ -34,7 +35,7 @@ void builder(FILE *in, FILE *out, FILE *index){
 }
 void generator(FILE *dat, FILE *index, int count){
       srand(time(NULL));
-      
+
       if( dat == NULL || index == NULL) {
            printf("Error opening file\n");
            return;

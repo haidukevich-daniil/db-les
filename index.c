@@ -74,7 +74,6 @@ long insert_node(FILE *index, long root_offset, long data_offset, int year, doub
 
 long find_node(FILE *index, long root_offset, int year){
      if(root_offset == -1){
-          printf("Year not found\n");
           return -1;
      }
 
@@ -107,11 +106,11 @@ double total_area(FILE *index, long offset_from, int from, int to){
      double total = 0.0;
 
      if(current.year > from){
-          total +=total_area(index, data, current.left, from, to);
+          total +=total_area(index, current.left, from, to);
      }
 
      if(current.year < to){
-          total +=total_area(index, data, current.right, from, to);
+          total +=total_area(index, current.right, from, to);
      }   
 
      if(current.year >= from && current.year <= to){
