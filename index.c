@@ -9,6 +9,7 @@ long create_node(FILE *index, int year, long data_offset, double area){
      node.left = -1;
      node.right = -1;
      node.next = -1;
+     node.subtree_area = area;
      node.year_area = area;
 
 
@@ -36,6 +37,8 @@ long insert_node(FILE *index, long root_offset, long data_offset, int year, doub
     }
 
      IndexNode current = read_node(index, root_offset);
+     current.subtree_area += area;
+     write_node(index, root_offset, current);
 
      if(year < current.year){
           if(current.left == -1){
