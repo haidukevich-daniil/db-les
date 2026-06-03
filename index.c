@@ -102,26 +102,6 @@ void print_same(FILE *index, FILE *data, long offset){
      }
 }
 
-double total_area(FILE *index, long offset_from, int from, int to){
-     if(offset_from == -1) return 0.0;
-
-     IndexNode current = read_node(index, offset_from);
-     double total = 0.0;
-
-     if(current.year > from){
-          total +=total_area(index, current.left, from, to);
-     }
-
-     if(current.year < to){
-          total +=total_area(index, current.right, from, to);
-     }   
-
-     if(current.year >= from && current.year <= to){
-          total += current.year_area;
-     }
-     return total;
-}
-
 void print_stats(FILE *index){
      IndexHeader header;
      fseek(index, 0, SEEK_SET);
@@ -130,19 +110,20 @@ void print_stats(FILE *index){
      printf("Total area: %.2lf\n", header.total_area);
 }
 
-void previous_sum(FILE *index, long offset_from, int year){
-     if(offset_from == -1) return;
+double previous_sum(FILE *index, long offset_from, int year){
+     if(offset_from == -1) return 0.0;
 
-     Index Node current = read_node(index, offset_from);
+     IndexNode current = read_node(index, offset_from);        
+     double total_left = 0.0;
+
 
      if(current.year > year){
-        previous_sum(index, current.left, year);
+        return previous_sum(index, current.left, year);
      }else{
-        double total_left = 0.0;
         if(current.left != -1){
              IndexNode left = read_node(index, current.left);
              total_left += left.subtree_area;    
         }
      }
-     return total_left + node.year_area + previous_sum(index, current.right, year);
+     return total_left + current.year_area + previous_sum(index, current.right, year);
 }

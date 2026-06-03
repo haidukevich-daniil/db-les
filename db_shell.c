@@ -26,7 +26,7 @@ int main(int argc, char *argv[]){
      fseek(idx, 0, SEEK_SET);
      fread(&header, sizeof(IndexHeader), 1, idx);
 
-     else if(strcmp(argv[1], "FIND") == 0){
+     if(strcmp(argv[1], "FIND") == 0){
           int year = atoi(argv[2]);
           long offset = find_node(idx, header.root_offset, year);
           if(offset == -1){
@@ -40,8 +40,8 @@ int main(int argc, char *argv[]){
      else if(strcmp(argv[1], "SUM") == 0){
           int from = atoi(argv[2]);
           int to = atoi(argv[3]);
-          long offset_from = find_node(idx, header.root_offset, from);
-          double total = total_area(idx, offset_from, from, to);
+          double total = previous_sum(idx, header.root_offset, to) - 
+                            previous_sum(idx, header.root_offset, from - 1);
           printf("Total area from %d to %d: %.2lf\n", from, to, total);
      }
 
