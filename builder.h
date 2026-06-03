@@ -5,6 +5,6 @@
 #include "common.h"
 
 void builder(FILE *in, FILE *out, FILE *index);
-void generator(FILE *dat, FILE *index);
+void generator(FILE *dat, FILE *index, int count);
 
 #endif

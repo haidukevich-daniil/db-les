@@ -34,24 +34,32 @@ void builder(FILE *in, FILE *out, FILE *index){
 }
 void generator(FILE *dat, FILE *index, int count){
       srand(time(NULL));
-     IndexHeader header = {0, 0.0, -1};
-     fwrite(&header, sizeof(IndexHeader), 1, index);
+      
+      if( dat == NULL || index == NULL) {
+           printf("Error opening file\n");
+           return;
+      }   
 
-     for(int i = 0; i < count; i++){
+      IndexHeader header = {0, 0.0, -1};
+      fwrite(&header, sizeof(IndexHeader), 1, index);
+      long offset = 0;
+
+      for(int i = 0; i < count; i++){
            LesData data;
            sprintf(data.code, "%c%d", 'A' + rand() % 26, i);
            data.year = 1960 + rand() % 66;
            data.species = 1 + rand() % 100;
            data.area = (double)(rand() % 100);
 
-           fseek(dat, 0, SEEK_END);
-           long offset = ftell(dat);
            fwrite(&data, sizeof(LesData), 1, dat);
 
            header.root_offset = insert_node(index, header.root_offset, offset, data.year, data.area);
+           offset += sizeof(LesData);
            header.count++;
            header.total_area += data.area;
+      }
 
+      fseek(index, 0, SEEK_SET);
+      fwrite(&header, sizeof(IndexHeader), 1, index);
 
-     }
 }
