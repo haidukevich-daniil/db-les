@@ -15,6 +15,7 @@ typedef struct{
      long left;
      long next;
      double year_area;
+     double subtree_area;
 }IndexNode;
 
 typedef struct{
