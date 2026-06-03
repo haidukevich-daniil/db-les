@@ -24,6 +24,7 @@ void builder(FILE *in, FILE *out, FILE *index){
           fwrite(&data, sizeof(LesData), 1, out);
 
           header.root_offset = insert_node(index, header.root_offset, offset, data.year, data.area);
+          
           offset += sizeof(LesData);
           header.count++;
           header.total_area += data.area;
@@ -51,6 +52,8 @@ void generator(FILE *dat, FILE *index, int count){
            data.year = 1960 + rand() % 66;
            data.species = 1 + rand() % 100;
            data.area = (double)(rand() % 100);
+
+           printf("Generated: %s %d %d %.2lf\n", data.code, data.year, data.species, data.area);
 
            fwrite(&data, sizeof(LesData), 1, dat);
 

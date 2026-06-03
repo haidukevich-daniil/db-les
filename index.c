@@ -35,7 +35,7 @@ long insert_node(FILE *index, long root_offset, long data_offset, int year, doub
      if(root_offset == -1){
           return create_node(index, year, data_offset, area);
     }
-
+    
      IndexNode current = read_node(index, root_offset);
      current.subtree_area += area;
      write_node(index, root_offset, current);
@@ -111,19 +111,18 @@ void print_stats(FILE *index){
 }
 
 double previous_sum(FILE *index, long offset_from, int year){
-     if(offset_from == -1) return 0.0;
+      if(offset_from == -1) return 0.0;
 
-     IndexNode current = read_node(index, offset_from);        
-     double total_left = 0.0;
+      IndexNode current = read_node(index, offset_from);        
 
-
-     if(current.year > year){
-        return previous_sum(index, current.left, year);
-     }else{
-        if(current.left != -1){
-             IndexNode left = read_node(index, current.left);
-             total_left += left.subtree_area;    
-        }
-     }
+      if(current.year > year){
+           return previous_sum(index, current.left, year);
+      }
+      double total_left = 0.0;
+      if(current.left != -1){
+           IndexNode left = read_node(index, current.left);
+           total_left += left.subtree_area;    
+      }
+     
      return total_left + current.year_area + previous_sum(index, current.right, year);
 }

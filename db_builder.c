@@ -13,7 +13,7 @@ int main(int argc, char *argv[]) {
 
      FILE *in = fopen("input.txt","r");
      FILE *out = fopen("les.dat","wb");
-     FILE *index = fopen("les.idx","wb");
+     FILE *index = fopen("les.idx","wb+");
      if( in == NULL || out == NULL || index == NULL) {
           printf("Error opening file\n");
           return 1;
@@ -23,10 +23,11 @@ int main(int argc, char *argv[]) {
          int count = atoi(argv[2]);
          generator(out, index, count);
      }else{
+          printf("calling builder\n");
           builder(in, out, index);
      }
 
-      fclose(in);
+     fclose(in);
       fclose(out);
       fclose(index);
      

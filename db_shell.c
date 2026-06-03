@@ -5,30 +5,33 @@
 #include "index.h"
 
 int main(int argc, char *argv[]){
-     if(argc < 2){
+      if(argc < 2){
           printf("Usage: %s <year>\n", argv[0]);
           return 1;
      }
 
-     FILE *idx = fopen("les.idx","rb");
-     FILE *dat = fopen("les.dat","rb");
+      FILE *idx = fopen("les.idx","rb");
+      FILE *dat = fopen("les.dat","rb");
 
-     if( idx == NULL || dat == NULL) {
+      if( idx == NULL || dat == NULL) {
           printf("Error opening file\n");
           return 1;
      }
      
-     IndexHeader header;
-     fseek(idx, 0, SEEK_SET);
-     fread(&header, sizeof(IndexHeader), 1, idx);
-     
+      IndexHeader header;
+      fseek(idx, 0, SEEK_SET);
+      fread(&header, sizeof(IndexHeader), 1, idx);
 
-     if(strcmp(argv[1],"STATS") == 0){
+      if(strcmp(argv[1],"STATS") == 0){
           print_stats(idx);
           
      }
 
      else if(strcmp(argv[1], "FIND") == 0){
+           if(argc != 3){
+               printf("Usage: FIND year\n");
+               return 1;
+           }     
           int year = atoi(argv[2]);
           long offset = find_node(idx, header.root_offset, year);
           if(offset == -1){
@@ -39,7 +42,11 @@ int main(int argc, char *argv[]){
           }
      }
 
-     else if(strcmp(argv[1], "SUM") == 0){
+      else if(strcmp(argv[1], "SUM") == 0){
+           if(argc != 4){
+                printf("Usage: SUM from to\n");
+                return 1;
+           }
           int from = atoi(argv[2]);
           int to = atoi(argv[3]);
           double total = previous_sum(idx, header.root_offset, to) - 
@@ -47,8 +54,8 @@ int main(int argc, char *argv[]){
           printf("Total area from %d to %d: %.2lf\n", from, to, total);
      }
 
-     fclose(idx);
-     fclose(dat);
+      fclose(idx);
+      fclose(dat);
 
-     return 0;
+      return 0;
 }
