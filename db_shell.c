@@ -17,16 +17,18 @@ int main(int argc, char *argv[]){
           printf("Error opening file\n");
           return 1;
      }
-
-     if(strcmp(argv[1],"STATS") == 0){
-          print_stats(idx);
-     }
-
+     
      IndexHeader header;
      fseek(idx, 0, SEEK_SET);
      fread(&header, sizeof(IndexHeader), 1, idx);
+     
 
-     if(strcmp(argv[1], "FIND") == 0){
+     if(strcmp(argv[1],"STATS") == 0){
+          print_stats(idx);
+          
+     }
+
+     else if(strcmp(argv[1], "FIND") == 0){
           int year = atoi(argv[2]);
           long offset = find_node(idx, header.root_offset, year);
           if(offset == -1){
