@@ -129,3 +129,15 @@ void print_stats(FILE *index){
      printf("Total records: %d\n", header.count);
      printf("Total area: %.2lf\n", header.total_area);
 }
+
+void previous_sum(FILE *index, long offset_from, int year){
+     if(offset_from == -1) return;
+
+     Index Node current = read_node(index, offset_from);
+
+     if(current.year < year){
+        previous_sum(index, current.left, year);
+     }
+
+
+}
