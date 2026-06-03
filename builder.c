@@ -53,7 +53,7 @@ void generator(FILE *dat, FILE *index, int count){
            data.species = 1 + rand() % 100;
            data.area = (double)(rand() % 100);
 
-           printf("Generated: %s %d %d %.2lf\n", data.code, data.year, data.species, data.area);
+           printf("%s %d %d %.2lf\n", data.code, data.year, data.species, data.area);
 
            fwrite(&data, sizeof(LesData), 1, dat);
 
