@@ -135,9 +135,14 @@ void previous_sum(FILE *index, long offset_from, int year){
 
      Index Node current = read_node(index, offset_from);
 
-     if(current.year < year){
+     if(current.year > year){
         previous_sum(index, current.left, year);
+     }else{
+        double total_left = 0.0;
+        if(current.left != -1){
+             IndexNode left = read_node(index, current.left);
+             total_left += left.subtree_area;    
+        }
      }
-
-
+     return total_left + node.year_area + previous_sum(index, current.right, year);
 }
