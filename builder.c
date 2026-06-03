@@ -3,11 +3,6 @@
 #include "index.h"
 
 void builder(FILE *in, FILE *out, FILE *index){
-
-     FILE *in = fopen("input.txt","r");
-     FILE *out = fopen("les.dat","wb");
-     FILE *index = fopen("les.idx","wb");
-
      if( in == NULL || out == NULL || index == NULL) {
           printf("Error opening file\n");
           return;
@@ -34,7 +29,7 @@ void builder(FILE *in, FILE *out, FILE *index){
      fseek(index, 0, SEEK_SET);
      fwrite(&header, sizeof(IndexHeader), 1, index);
 
-     fclose(in);
-     fclose(out);
-     fclose(index);
+}
+void generator(FILE *dat, FILE *index){
+     // This function can be implemented to generate random data and build the index
 }
