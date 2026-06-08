@@ -6,14 +6,18 @@
 #include <time.h>
 
 void builder(FILE *in, FILE *out, FILE *index){
+     LesData data;
+     IndexHeader header = {0, -1};
+     double total = 0.0;
+     long offset = 0;
+
      if( in == NULL || out == NULL || index == NULL) {
           printf("Error opening file\n");
           return;
      }
 
-     LesData data;
-     IndexHeader header = {0, -1};
      fwrite(&header, sizeof(IndexHeader), 1, index);
+     double total = 0.0;
      long offset = 0;
 
      while(fscanf(in, "%s %d %d %lf",
@@ -27,7 +31,7 @@ void builder(FILE *in, FILE *out, FILE *index){
           
           offset += sizeof(LesData);
           header.count++;
-          }
+     }
 
      fseek(index, 0, SEEK_SET);
      fwrite(&header, sizeof(IndexHeader), 1, index);
