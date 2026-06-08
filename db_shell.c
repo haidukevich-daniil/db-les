@@ -65,7 +65,7 @@ int main(int argc, char *argv[]){
                     printf("No data found for year %d\n", year);
                }
                else{
-                    delete_duplicates(idx, offset);
+                    delete_duplicates(idx, dat, offset);
                     printf("Deleted records for year %d\n", year);
                }
 
