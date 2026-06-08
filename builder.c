@@ -46,8 +46,6 @@ void generator(FILE *dat, FILE *index, int count){
 
       IndexHeader header = {0, -1};
       fwrite(&header, sizeof(IndexHeader), 1, index);
-      double total = 0.0;
-      fwrite(&total, sizeof(double), 1, index);
       long offset = 0;
 
       for(int i = 0; i < count; i++){
@@ -65,11 +63,9 @@ void generator(FILE *dat, FILE *index, int count){
            offset += sizeof(LesData);
            header.count++;
                 }
-      total = total_area(index, header.root_offset);
 
 
       fseek(index, 0, SEEK_SET);
       fwrite(&header, sizeof(IndexHeader), 1, index);
-      fwrite(&total, sizeof(double), 1, index);
 
 }
