@@ -70,6 +70,9 @@ int main(int argc, char *argv[]){
                }
 
      }
+     else if(strcmp(argv[1], "RAW") == 0){
+          print_all(idx, header.root_offset);
+     }
 
       fclose(idx);
       fclose(dat);

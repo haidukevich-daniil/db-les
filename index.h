@@ -18,4 +18,6 @@ double total_area(FILE *index, int root_offset);
 
 void delete_duplicates(FILE *index, FILE *data, long offset);
 
+void print_all(FILE *index, long offset);
+
 #endif

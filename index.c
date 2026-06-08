@@ -148,3 +148,18 @@ void delete_duplicates(FILE *index, FILE *data, long offset){
      current.next == -1;
      write_node(index, offset, current);
 }
+
+void print_all(FILE *index, long root_offset){
+     if(root_offset == -1) return;
+
+     IndexNode current = read_node(index, root_offset);
+
+     while(root_offset != -1){
+     printf("%d %ld %ld %ld %ld %.2lf %.2lf\n", current.year,
+           current.data_offset, current.right, current.left, 
+           current.next, current.year_area, current.subtree_area);
+
+           root_offset += sizeof(IndexNode);
+          current = read_node(index, root_offset);
+     }
+}
