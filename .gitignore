@@ -1,3 +1,6 @@
+db_builder
+db_shell
+
 # Prerequisites
 *.d
 
