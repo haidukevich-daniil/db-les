@@ -145,21 +145,25 @@ void delete_duplicates(FILE *index, FILE *data, long offset){
      fread(&dat, sizeof(LesData), 1, data);
 
      current.year_area = dat.area;
-     current.next == -1;
+     current.next = -1;
      write_node(index, offset, current);
 }
 
 void print_all(FILE *index, long root_offset){
-     if(root_offset == -1) return;
+     long scanning_offset;
+     if(root_offset == -1)
+         return;
 
-     IndexNode current = read_node(index, root_offset);
+     IndexNode current;
 
-     while(root_offset != -1){
-     printf("%d %ld %ld %ld %ld %.2lf %.2lf\n", current.year,
-           current.data_offset, current.right, current.left, 
-           current.next, current.year_area, current.subtree_area);
+     fseek(index, sizeof(IndexHeader), SEEK_SET);
 
-           root_offset += sizeof(IndexNode);
-          current = read_node(index, root_offset);
+     scanning_offset = ftell(index);
+
+     while( fread(&current, sizeof(IndexNode), 1, index) ){
+         printf("[%ld] %d %ld %ld %ld %ld %.2lf %.2lf\n", scanning_offset, current.year,
+               current.data_offset, current.right, current.left, 
+               current.next, current.year_area, current.subtree_area);
+         scanning_offset = ftell(index);
      }
 }
