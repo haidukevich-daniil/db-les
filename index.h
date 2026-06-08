@@ -16,4 +16,6 @@ double previous_sum(FILE *index, long offset_from, int year);
 
 double total_area(FILE *index, int root_offset);
 
+void delete_duplicates(FILE *index, long offset);
+
 #endif

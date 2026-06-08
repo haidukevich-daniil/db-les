@@ -10,7 +10,7 @@ int main(int argc, char *argv[]){
           return 1;
      }
 
-      FILE *idx = fopen("les.idx","rb");
+      FILE *idx = fopen("les.idx","rb+");
       FILE *dat = fopen("les.dat","rb");
 
       if( idx == NULL || dat == NULL) {
@@ -52,6 +52,23 @@ int main(int argc, char *argv[]){
           double total = previous_sum(idx, header.root_offset, to) - 
                             previous_sum(idx, header.root_offset, from - 1);
           printf("Total area from %d to %d: %.2lf\n", from, to, total);
+     }
+
+     else if(strcmp(argv[1], "DELETE") == 0){
+               if(argc != 3){
+                    printf("Usage: DELETE year\n");
+                    return 1;
+               }
+               int year = atoi(argv[2]);
+               long offset = find_node(idx, header.root_offset, year);
+               if(offset == -1){
+                    printf("No data found for year %d\n", year);
+               }
+               else{
+                    delete_duplicates(idx, offset);
+                    printf("Deleted records for year %d\n", year);
+               }
+
      }
 
       fclose(idx);

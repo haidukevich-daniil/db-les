@@ -135,3 +135,16 @@ double total_area(FILE *index, int root_offset){
      IndexNode root = read_node(index, root_offset);
      return root.subtree_area;
 }
+
+void delete_duplicates(FILE *index, long offset){
+     if (offset == -1) return;
+     IndexNode current = read_node(index, offset);
+     
+     LesData dat;
+     fseek(index, current.data_offset, SEEK_SET);
+     fread(&dat, sizeof(LesData), 1, index);
+
+     current.year_area = dat.area;
+     current.next == -1;
+     write_node(index, offset, current);
+}
