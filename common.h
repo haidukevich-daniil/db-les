@@ -20,7 +20,6 @@ typedef struct{
 
 typedef struct{
      int count;
-     double total_area;
      long root_offset;
 }IndexHeader;
 

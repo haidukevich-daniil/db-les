@@ -12,8 +12,10 @@ void builder(FILE *in, FILE *out, FILE *index){
      }
 
      LesData data;
-     IndexHeader header = {0, 0.0, -1};
+     IndexHeader header = {0, -1};
      fwrite(&header, sizeof(IndexHeader), 1, index);
+     double total = 0.0;
+     fwrite(&total, sizeof(double), 1, index);
      long offset = 0;
 
      while(fscanf(in, "%s %d %d %lf",
@@ -27,11 +29,12 @@ void builder(FILE *in, FILE *out, FILE *index){
           
           offset += sizeof(LesData);
           header.count++;
-          header.total_area += data.area;
-     }
+          }
 
+     total = total_area(index, header.root_offset);
      fseek(index, 0, SEEK_SET);
      fwrite(&header, sizeof(IndexHeader), 1, index);
+     fwrite(&total, sizeof(double), 1, index);
 
 }
 void generator(FILE *dat, FILE *index, int count){
@@ -42,8 +45,10 @@ void generator(FILE *dat, FILE *index, int count){
            return;
       }   
 
-      IndexHeader header = {0, 0.0, -1};
+      IndexHeader header = {0, -1};
       fwrite(&header, sizeof(IndexHeader), 1, index);
+      double total = 0.0;
+      fwrite(&total, sizeof(double), 1, index);
       long offset = 0;
 
       for(int i = 0; i < count; i++){
@@ -60,10 +65,12 @@ void generator(FILE *dat, FILE *index, int count){
            header.root_offset = insert_node(index, header.root_offset, offset, data.year, data.area);
            offset += sizeof(LesData);
            header.count++;
-           header.total_area += data.area;
-      }
+                }
+      total = total_area(index, header.root_offset);
+
 
       fseek(index, 0, SEEK_SET);
       fwrite(&header, sizeof(IndexHeader), 1, index);
+      fwrite(&total, sizeof(double), 1, index);
 
 }

@@ -14,4 +14,6 @@ void print_stats(FILE *index);
 
 double previous_sum(FILE *index, long offset_from, int year);
 
+double total_area(FILE *index, int root_offset);
+
 #endif

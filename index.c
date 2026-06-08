@@ -104,10 +104,13 @@ void print_same(FILE *index, FILE *data, long offset){
 
 void print_stats(FILE *index){
      IndexHeader header;
+     IndexNode root;
+     
      fseek(index, 0, SEEK_SET);
      fread(&header, sizeof(IndexHeader), 1, index);
+     fread(&root, sizeof(IndexNode), 1, index);
      printf("Total records: %d\n", header.count);
-     printf("Total area: %.2lf\n", header.total_area);
+     printf("Total area: %.2lf\n", root.subtree_area);
 }
 
 double previous_sum(FILE *index, long offset_from, int year){
@@ -125,4 +128,9 @@ double previous_sum(FILE *index, long offset_from, int year){
       }
      
      return total_left + current.year_area + previous_sum(index, current.right, year);
+}
+
+double total_area(FILE *index, int root_offset){
+     IndexNode root = read_node(index, root_offset);
+     return root.subtree_area;
 }
