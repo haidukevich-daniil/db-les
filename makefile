@@ -8,3 +8,4 @@ all: db_builder db_shell
 
 clean:
 	rm -f *.exe
+	rm -f db_builder db_shell
