@@ -17,8 +17,6 @@ void builder(FILE *in, FILE *out, FILE *index){
      }
 
      fwrite(&header, sizeof(IndexHeader), 1, index);
-     double total = 0.0;
-     long offset = 0;
 
      while(fscanf(in, "%s %d %d %lf",
                data.code, 
