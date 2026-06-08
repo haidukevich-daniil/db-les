@@ -108,6 +108,7 @@ void print_stats(FILE *index){
      
      fseek(index, 0, SEEK_SET);
      fread(&header, sizeof(IndexHeader), 1, index);
+     fseek(index, header.root_offset, SEEK_SET);
      fread(&root, sizeof(IndexNode), 1, index);
      printf("Total records: %d\n", header.count);
      printf("Total area: %.2lf\n", root.subtree_area);
