@@ -1,6 +1,9 @@
 db_builder
 db_shell
 
+*.idx
+*.dat
+
 # Prerequisites
 *.d
 
